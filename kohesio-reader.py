@@ -30,7 +30,7 @@ countryIds = { x['instanceLabel']:x['instance'] for x in countryIds }
 
 # Adds relevant information for each beneficiary to a list, which will later be written into a CSV
 beneficiaryInfo = []
-beneficiaryInfo.append('Country,Region,Beneficiary Name,Total Budget,EU Contribution,Number of Projects,Transliterated Name')
+beneficiaryInfo.append('Country,Region,Beneficiary Name,Total Budget,EU Contribution,Number of Projects,Transliterated Name,\n')
 
 for country in countries:
   countryId = countryIds[country]
