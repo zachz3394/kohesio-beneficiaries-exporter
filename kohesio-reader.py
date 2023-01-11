@@ -18,8 +18,8 @@ countries = [
   'Slovenia',
 ]
 
-# Name of the CSV file to write to:
-csvFile = 'kohesio-data-export.csv'
+# Name of the TSV file to write to:
+tsvFile = 'kohesio-data-export.tsv'
 
 # Request to get dict of country IDs from which to use in later API calls
 res = requests.get('https://kohesio.ec.europa.eu/api/facet/eu/countries', params={'language': 'en'})
@@ -28,9 +28,9 @@ if not res.status_code == 200:
 countryIds = json.loads(res.text)
 countryIds = { x['instanceLabel']:x['instance'] for x in countryIds }
 
-# Adds relevant information for each beneficiary to a list, which will later be written into a CSV
+# Adds relevant information for each beneficiary to a list, which will later be written into a TSV
 beneficiaryInfo = []
-beneficiaryInfo.append('Country,Region,Beneficiary Name,Total Budget,EU Contribution,Number of Projects,Transliterated Name,\n')
+beneficiaryInfo.append('Country\tRegion\tBeneficiary Name\tTotal Budget\tEU Contribution\tNumber of Projects\tTransliterated Name\t\n')
 
 for country in countries:
   countryId = countryIds[country]
@@ -76,8 +76,8 @@ for country in countries:
         str(beneficiary['transliteration'] or ''),
         '\n',
       ]
-      beneficiaryInfo.append(','.join(info))
+      beneficiaryInfo.append('\t'.join(info))
 
-with open(csvFile, 'w') as f:
+with open(tsvFile, 'w') as f:
   f.writelines(beneficiaryInfo)
 
